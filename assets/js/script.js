@@ -4,10 +4,12 @@ let option2 = "";
 let option3 = "";
 let option4 = "";
 let answer = "";
+let displayTimer= "";
 
 let score = 0;
-let timeLeft = 700;
+let timeLeft = 10;
 let questionIndex = 0;
+let countDown = "";
 
 let currentQuestion = document.getElementById("displayedQuestion");
 let currentOptions = document.getElementById("displayedOptions");
@@ -47,7 +49,7 @@ function start (){
 
 
 
-function startTimer (){
+function startTimer (){  // starts and displays timer
     var displayTimer = document.createElement("div");
     document.getElementById("timer").appendChild(displayTimer);
 
@@ -55,9 +57,7 @@ function startTimer (){
         displayTimer.textContent = ("Time Remaining: " + timeLeft);
         timeLeft--;
 
-        if(timeLeft <= 0){
-            console.log("time up");
-
+        if(timeLeft <= 0){  // stops timer when time runs out
             clearInterval(countDown);
             displayTimer.textContent = 0;
             gameOver();
@@ -83,15 +83,13 @@ function clickListener(){
         } else if (e.target.textContent === questions[questionIndex].option1 || e.target.textContent === questions[questionIndex].option2 || e.target.textContent === questions[questionIndex].option3 || e.target.textContent === questions[questionIndex].option4) {
             incorrect();
         }
-
-        console.log("index at click listener " + questionIndex)
     });
 
 }
 
 
 
-function nextQuestion(){ //generate questions and options
+function nextQuestion(){
 
     console.log("nextquestion")
     console.log("index at nextquestion" + questionIndex)
@@ -119,7 +117,6 @@ function nextQuestion(){ //generate questions and options
 
 
 function correct(){
-    console.log("yup");
 
     score += 10;
     document.getElementById("score").textContent = score;
@@ -136,7 +133,6 @@ function correct(){
 }
 
 function incorrect(){
-    console.log("nope");
 
     score -= 5;
     document.getElementById("score").textContent = score;
@@ -157,25 +153,25 @@ function incorrect(){
 function clearQuestion(){
     document.getElementById("displayedQuestion").innerHTML = "";
     document.getElementById("displayedOptions").innerHTML = "";
-    document.querySelector("p").innerHTML = "";
+    // document.querySelector("p").innerHTML = "";
+    // add docmunet.body.children[] to target the created p specifically
+
 
     questionIndex++
 
-    if(questionIndex < questions.length){
-        nextQuestion();
-    }else{ 
+    if(questionIndex === questions.length || timeLeft <= 0){
         gameOver();
+    }else{
+        nextQuestion();
     }
-
-    console.log("This is the current index: " + questionIndex);
-    console.log("This is the score " + score);
 }
-
 
 
 function gameOver(){
     console.log("gameover")
-    displayTimer.textContent = 0;
+    console.log(document.body.children)
+
+    // document.getElementById("timer").innerHTML = "";
 
     document.getElementById("displayedQuestion").innerHTML = "";
     document.getElementById("displayedOptions").innerHTML = "";
