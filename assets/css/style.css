@@ -1,0 +1,68 @@
+body {
+    text-align: center;
+    color: #293035;
+    background-color: #fdf8ef;
+    font-family: Verdana, sans-serif;
+}
+
+#initial-container h1 {
+    font-size: 50px;
+}
+
+#initial-container p {
+    font-size: 20px;
+}
+
+#startButton {
+    font-size: 25px;
+    color: #ffffff;
+    background-color: #3b444b;
+    border-radius: 12px;
+}
+
+#startButton:hover{
+    font-size: 30px;
+}
+
+
+
+/* timer and score portion */
+
+#timer {
+    font-size: 18px;
+    position: absolute;
+    right: 5%;
+    top: 2%;
+}
+
+#score {
+    font-size: 18px;
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
+
+
+/* Question and Answers portion */
+
+#displayedQuestion {
+    font-size: 35px;
+    text-decoration: underline;
+}
+
+
+#displayedOptions {
+    position: absolute;
+    left: 33%;
+}
+
+#displayedOptions button {
+    font-size: 18px;
+    display: block;
+    border-radius: 12px;
+    margin: 8px;
+}
+
+#displayedOptions button:hover{
+    font-size: 22px;
+}
