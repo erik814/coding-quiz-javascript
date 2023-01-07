@@ -47,9 +47,11 @@ let questions = [
     },
 ];
 
-// var displayCorrect = document.createElement("p");
-// displayCorrect.textContent = ("");
-// document.body.appendChild(displayCorrect);
+
+
+
+
+// This is where the process begins
 
 document.getElementById("startButton").addEventListener("click", start);
 
@@ -106,27 +108,27 @@ function clickListener(){
 
 function nextQuestion(){
 
-        console.log("nextquestion")
-        console.log("index at nextquestion" + questionIndex)
+    console.log("nextquestion")
+    console.log("index at nextquestion" + questionIndex)
 
-        currentQuestion.textContent = questions[questionIndex].questionTitle;
+    currentQuestion.textContent = questions[questionIndex].questionTitle;
 
-        let displayOption1 = document.createElement("button")
-        displayOption1.textContent = (questions[questionIndex].option1);
-        currentOptions.appendChild(displayOption1);
+    let displayOption1 = document.createElement("button")
+    displayOption1.textContent = (questions[questionIndex].option1);
+    currentOptions.appendChild(displayOption1);
 
-        let displayOption2 = document.createElement("button")
-        displayOption2.textContent = (questions[questionIndex].option2);
-        currentOptions.appendChild(displayOption2);
+    let displayOption2 = document.createElement("button")
+    displayOption2.textContent = (questions[questionIndex].option2);
+    currentOptions.appendChild(displayOption2);
 
-        let displayOption3 = document.createElement("button")
-        displayOption3.textContent = (questions[questionIndex].option3);
-        currentOptions.appendChild(displayOption3);
+    let displayOption3 = document.createElement("button")
+    displayOption3.textContent = (questions[questionIndex].option3);
+    currentOptions.appendChild(displayOption3);
 
-        let displayOption4 = document.createElement("button")
-        displayOption4.textContent = (questions[questionIndex].option4);
-        currentOptions.appendChild(displayOption4);
-    //}
+    let displayOption4 = document.createElement("button")
+    displayOption4.textContent = (questions[questionIndex].option4);
+    currentOptions.appendChild(displayOption4);
+    
 }
 
 
@@ -189,9 +191,39 @@ function gameOver(){
 
     document.getElementById("displayedQuestion").innerHTML = "Final Score: " + score;
 
-    let initialsField = document.createElement("input");
-    initialsField.type = "text";
-    initialsField.className
+    // add initials text input and submit button
+
+    let inputSubmitContainer = document.createElement("div");
+    inputSubmitContainer.setAttribute("id", "inputSubmitContainer");
+    document.body.appendChild(inputSubmitContainer);
+
+    let textInputField = document.createElement("textarea");
+    textInputField.setAttribute("id", "textInputField");
+    textInputField.textContent = "Your Initials Here"
+    inputSubmitContainer.appendChild(textInputField);
+    console.log(inputSubmitContainer)
+
+    let submitButton = document.createElement("button");
+    submitButton.setAttribute("id", "submitButton");
+    submitButton.textContent = "Submit";
+    inputSubmitContainer.appendChild(submitButton);
+
+    //write initials to text box
+
+    textInputField.addEventListener('keydown', function(e){
+        console.log(e);
+        textInputField.textContent = e.value;
+    })
+
+    inputSubmitContainer.addEventListener('click', function(e){
+        console.log(e.target)
+        if(e.target === textInputField){
+            textInputField.textContent = "";
+        }else if(e.target === submitButton){
+            localStorage.setItem("")
+        }
+    })
 
 }
 
+// add leaderboard function
