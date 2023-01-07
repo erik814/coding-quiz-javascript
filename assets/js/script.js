@@ -7,12 +7,16 @@ let answer = "";
 let displayTimer= "";
 
 let score = 0;
-let timeLeft = 10;
+let timeLeft = 5;
 let questionIndex = 0;
 let countDown = "";
 
 let currentQuestion = document.getElementById("displayedQuestion");
 let currentOptions = document.getElementById("displayedOptions");
+
+var displayCorrect = document.createElement("p");
+displayCorrect.textContent = ("");
+document.body.appendChild(displayCorrect);
 
 let questions = [
     {
@@ -32,9 +36,20 @@ let questions = [
         option4: "option 8",
         answer: option4,
     },
+
+    {
+        questionTitle: "Question 2",
+        option1: "option 5",
+        option2: "option 6",
+        option3: "option 7",
+        option4: "option 8",
+        answer: option4,
+    },
 ];
 
-
+// var displayCorrect = document.createElement("p");
+// displayCorrect.textContent = ("");
+// document.body.appendChild(displayCorrect);
 
 document.getElementById("startButton").addEventListener("click", start);
 
@@ -57,7 +72,7 @@ function startTimer (){  // starts and displays timer
         displayTimer.textContent = ("Time Remaining: " + timeLeft);
         timeLeft--;
 
-        if(timeLeft <= 0){  // stops timer when time runs out
+        if(timeLeft <= 0 || questionIndex === questions.length){
             clearInterval(countDown);
             displayTimer.textContent = 0;
             gameOver();
@@ -91,27 +106,27 @@ function clickListener(){
 
 function nextQuestion(){
 
-    console.log("nextquestion")
-    console.log("index at nextquestion" + questionIndex)
+        console.log("nextquestion")
+        console.log("index at nextquestion" + questionIndex)
 
-    currentQuestion.textContent = questions[questionIndex].questionTitle;
+        currentQuestion.textContent = questions[questionIndex].questionTitle;
 
-    let displayOption1 = document.createElement("button")
-    displayOption1.textContent = (questions[questionIndex].option1);
-    currentOptions.appendChild(displayOption1);
+        let displayOption1 = document.createElement("button")
+        displayOption1.textContent = (questions[questionIndex].option1);
+        currentOptions.appendChild(displayOption1);
 
-    let displayOption2 = document.createElement("button")
-    displayOption2.textContent = (questions[questionIndex].option2);
-    currentOptions.appendChild(displayOption2);
+        let displayOption2 = document.createElement("button")
+        displayOption2.textContent = (questions[questionIndex].option2);
+        currentOptions.appendChild(displayOption2);
 
-    let displayOption3 = document.createElement("button")
-    displayOption3.textContent = (questions[questionIndex].option3);
-    currentOptions.appendChild(displayOption3);
+        let displayOption3 = document.createElement("button")
+        displayOption3.textContent = (questions[questionIndex].option3);
+        currentOptions.appendChild(displayOption3);
 
-    let displayOption4 = document.createElement("button")
-    displayOption4.textContent = (questions[questionIndex].option4);
-    currentOptions.appendChild(displayOption4);
-
+        let displayOption4 = document.createElement("button")
+        displayOption4.textContent = (questions[questionIndex].option4);
+        currentOptions.appendChild(displayOption4);
+    //}
 }
 
 
@@ -122,12 +137,10 @@ function correct(){
     document.getElementById("score").textContent = score;
 
     timeLeft += 10;
-
-    var displayCorrect = document.createElement("p");
     displayCorrect.textContent = ("That's right, smartypants!");
-    document.body.appendChild(displayCorrect);
 
     setTimeout(function(){
+        document.querySelectorAll("p").innerHTML = ""
         clearQuestion();
     },1500)
 }
@@ -138,12 +151,10 @@ function incorrect(){
     document.getElementById("score").textContent = score;
 
     timeLeft -= 10;
-
-    var displayIncorrect = document.createElement("p");
-    displayIncorrect.textContent = ("Mmmmm, not quite...");
-    document.body.appendChild(displayIncorrect);
+    displayCorrect.textContent = ("Mmmmm, not quite...");
 
     setTimeout(function(){
+        document.querySelectorAll("p").innerHTML = ""
         clearQuestion();
     },1500)
 }
@@ -153,16 +164,12 @@ function incorrect(){
 function clearQuestion(){
     document.getElementById("displayedQuestion").innerHTML = "";
     document.getElementById("displayedOptions").innerHTML = "";
-    // document.querySelector("p").innerHTML = "";
-    // add docmunet.body.children[] to target the created p specifically
-
+    displayCorrect.textContent = ("");
 
     questionIndex++
 
-    if(questionIndex === questions.length || timeLeft <= 0){
-        gameOver();
-    }else{
-        nextQuestion();
+    if(timeLeft > 0 && questionIndex < questions.length){
+        nextQuestion()
     }
 }
 
@@ -171,16 +178,20 @@ function gameOver(){
     console.log("gameover")
     console.log(document.body.children)
 
-    // document.getElementById("timer").innerHTML = "";
-
     document.getElementById("displayedQuestion").innerHTML = "";
     document.getElementById("displayedOptions").innerHTML = "";
-    document.querySelector("p").innerHTML = "";
     
+    console.log(document.getElementById("displayedOptions").innerHTML)
+
     let reinstateH1 = document.createElement("h1");
     reinstateH1.textContent = ("Game Over!");
     document.getElementById("initial-container").appendChild(reinstateH1);
 
+    document.getElementById("displayedQuestion").innerHTML = "Final Score: " + score;
 
+    let initialsField = document.createElement("input");
+    initialsField.type = "text";
+    initialsField.className
 
 }
+
