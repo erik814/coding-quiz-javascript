@@ -8,7 +8,7 @@ let displayTimer = "";
 let nameAndScore = [];
 
 let score = 0;
-let timeLeft = 5;
+let timeLeft = 60;
 let questionIndex = 0;
 let countDown = "";
 
