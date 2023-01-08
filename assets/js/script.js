@@ -269,17 +269,15 @@ function takeInitials(){
         e.preventDefault();
         if(e.target === submitButton){
 
-            localStorage.getItem
+            console.log(textInputField.value)
+            console.log(score)
 
             let nsObject = {
                 player: textInputField.value,
                 score: score
             };
 
-            // nameAndScore.push(nsObject);
-
-            // console.log("n+s @ ns push " + nameAndScore)
-            // localStorage.setItem("nameAndScore", JSON.stringify(nameAndScore));
+            localStorage.setItem("nameAndScore", JSON.stringify(nsObject))
 
             highScores();
         }
@@ -301,15 +299,20 @@ function highScores(){
     leaderBoardDiv.appendChild(leaderBoardHeader);
 
     let leaderBoardDisplay = document.createElement("ul");
+    leaderBoardDisplay.setAttribute("id", "ul")
     leaderBoardDiv.appendChild(leaderBoardDisplay);
 
-
+    console.log("nsobject at highscores " + nsObject)
     console.log(JSON.parse(localStorage.getItem("nameAndScore")))
 
-    
+
     let nameAndScore = JSON.parse(localStorage.getItem("nameAndScore"));
-    nameAndScore.push(nsObject);
-    localStorage.setItem("nameAndScore", JSON.stringify(nameAndScore));
+    console.log(nameAndScore)
+    // JSON.stringify(nameAndScore).push(JSON.stringify(nsObject));
+
+    var li = document.createElement("li");
+    li.textContent = JSON.stringify(nameAndScore);
+    leaderBoardDisplay.appendChild(li);
 
 
 
@@ -322,4 +325,4 @@ function highScores(){
 
 
 
-// last commit added text box, submit button, listeners, and got typed keys appearing in box
+// quiz questions, started on local storage
