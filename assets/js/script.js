@@ -4,7 +4,8 @@ let option2 = "";
 let option3 = "";
 let option4 = "";
 let answer = "";
-let displayTimer= "";
+let displayTimer = "";
+let nameAndScore = [];
 
 let score = 0;
 let timeLeft = 5;
@@ -13,6 +14,8 @@ let countDown = "";
 
 let currentQuestion = document.getElementById("displayedQuestion");
 let currentOptions = document.getElementById("displayedOptions");
+let gameOverDiv = "";
+let nsObject = {}
 
 var displayCorrect = document.createElement("p");
 displayCorrect.textContent = ("");
@@ -20,30 +23,57 @@ document.body.appendChild(displayCorrect);
 
 let questions = [
     {
-        questionTitle: "Who do we love most?",
-        option1: "Chuck",
-        option2: "Misfits",
-        option3: "Sandra",
-        option4: "Converse",
-        answer: "Misfits",
+        questionTitle: "How would you say two conditions are strictly equal?",
+        option1: "!=",
+        option2: "===",
+        option3: "==",
+        option4: "!==",
+        answer: "===",
     },
 
     {
-        questionTitle: "Question 2",
-        option1: "option 5",
-        option2: "option 6",
-        option3: "option 7",
-        option4: "option 8",
-        answer: option4,
+        questionTitle: "What does math.random do?",
+        option1: "Randomizes a set of numbers",
+        option2: "Provides a random number from 0-100",
+        option3: "Provides a random number from 0 up to, but not including, 1",
+        option4: "Provides a random number from 1-10",
+        answer: "Provides a random number from 0 up to, but not including, 1",
     },
 
     {
-        questionTitle: "Question 2",
-        option1: "option 5",
-        option2: "option 6",
-        option3: "option 7",
-        option4: "option 8",
-        answer: option4,
+        questionTitle: "What is a method?",
+        option1: "An object within a function",
+        option2: "An array within a function",
+        option3: "A function within an array",
+        option4: "A function within an object",
+        answer: "A function within an object",
+    },
+
+    {
+        questionTitle: "What type of data is either true or false?",
+        option1: "boolean",
+        option2: "string",
+        option3: "binary",
+        option4: "number",
+        answer: "boolean",
+    },
+
+    {
+        questionTitle: "Variables declared at the top of the code are part of what scope?",
+        option1: "function",
+        option2: "unified",
+        option3: "global",
+        option4: "main",
+        answer: "global",
+    },
+
+    {
+        questionTitle: "Multiple pieces of data stored in one variable is called what?",
+        option1: "method",
+        option2: "multiple variable",
+        option3: "boolean",
+        option4: "array",
+        answer: "array",
     },
 ];
 
@@ -56,7 +86,8 @@ let questions = [
 document.getElementById("startButton").addEventListener("click", start);
 
 function start (){
-    document.getElementById("initial-container").innerHTML = "";
+    // document.getElementById("initial-container").innerHTML = "";
+    document.getElementById("initial-container").style.display = 'none';
     
     startTimer();
     showScore();
@@ -91,7 +122,7 @@ function showScore (){
     document.getElementById("score").appendChild(displayScore);
 };
 
-
+console.log(document.body)
 
 function clickListener(){
     document.body.addEventListener("click", function(e){
@@ -101,7 +132,6 @@ function clickListener(){
             incorrect();
         }
     });
-
 }
 
 
@@ -164,8 +194,8 @@ function incorrect(){
 
 
 function clearQuestion(){
-    document.getElementById("displayedQuestion").innerHTML = "";
-    document.getElementById("displayedOptions").innerHTML = "";
+    currentQuestion.innerHTML = "";
+    currentOptions.innerHTML = "";
     displayCorrect.textContent = ("");
 
     questionIndex++
@@ -177,53 +207,119 @@ function clearQuestion(){
 
 
 function gameOver(){
-    console.log("gameover")
-    console.log(document.body.children)
+    currentQuestion.innerHTML = "";
+    currentOptions.innerHTML = "";
+    document.getElementById("timer").innerHTML = "";
+    document.getElementById("score").innerHTML = "";
 
-    document.getElementById("displayedQuestion").innerHTML = "";
-    document.getElementById("displayedOptions").innerHTML = "";
-    
-    console.log(document.getElementById("displayedOptions").innerHTML)
+    // let reinstateH1 = document.createElement("h1");
+    // reinstateH1.setAttribute("id", "h1GameOver")
+    // reinstateH1.textContent = ("Game Over!");
+    // document.body.appendChild(reinstateH1);
 
-    let reinstateH1 = document.createElement("h1");
-    reinstateH1.textContent = ("Game Over!");
-    document.getElementById("initial-container").appendChild(reinstateH1);
+    // document.getElementById("displayedQuestion").innerHTML = "Game Over!"
+    // document.getElementById("displayedQuestion").innerHTML = "Final Score: " + score;
 
-    document.getElementById("displayedQuestion").innerHTML = "Final Score: " + score;
+    let gameOverDiv = document.createElement("div");
+    gameOverDiv.setAttribute("id", "gameoverdiv");
+    document.body.appendChild(gameOverDiv);
 
-    // add initials text input and submit button
+    let gameOverText = document.createElement("h1");
+    gameOverText.textContent = "Game Over!";
+    gameOverDiv.appendChild(gameOverText);
+
+    let finalScoreText = document.createElement("h2");
+    finalScoreText.textContent = "Final Score: " + score;
+    gameOverDiv.appendChild(finalScoreText);
+
+    takeInitials();
+}
+
+
+
+function takeInitials(){
+        // add initials text input and submit button
 
     let inputSubmitContainer = document.createElement("div");
     inputSubmitContainer.setAttribute("id", "inputSubmitContainer");
     document.body.appendChild(inputSubmitContainer);
 
+    let gameOverPtag = document.createElement("p");
+    gameOverPtag.textContent = "Please submit your initials";
+    inputSubmitContainer.appendChild(gameOverPtag);
+
     let textInputField = document.createElement("textarea");
     textInputField.setAttribute("id", "textInputField");
-    textInputField.textContent = "Your Initials Here"
+    textInputField.textContent = "";
     inputSubmitContainer.appendChild(textInputField);
-    console.log(inputSubmitContainer)
+    console.log(inputSubmitContainer);
 
     let submitButton = document.createElement("button");
     submitButton.setAttribute("id", "submitButton");
     submitButton.textContent = "Submit";
     inputSubmitContainer.appendChild(submitButton);
 
-    //write initials to text box
+    //write initials to text box & save to storage
 
     textInputField.addEventListener('keydown', function(e){
         console.log(e);
-        textInputField.textContent = e.value;
     })
 
     inputSubmitContainer.addEventListener('click', function(e){
-        console.log(e.target)
-        if(e.target === textInputField){
-            textInputField.textContent = "";
-        }else if(e.target === submitButton){
-            localStorage.setItem("")
-        }
-    })
+        e.preventDefault();
+        if(e.target === submitButton){
 
+            localStorage.getItem
+
+            let nsObject = {
+                player: textInputField.value,
+                score: score
+            };
+
+            // nameAndScore.push(nsObject);
+
+            // console.log("n+s @ ns push " + nameAndScore)
+            // localStorage.setItem("nameAndScore", JSON.stringify(nameAndScore));
+
+            highScores();
+        }
+    });
 }
 
-// add leaderboard function
+
+
+function highScores(){
+    console.log("starting highsscores")
+    document.getElementById("gameoverdiv").innerHTML = "";
+    inputSubmitContainer.innerHTML = "";
+
+    let leaderBoardDiv = document.createElement("div");
+    document.body.appendChild(leaderBoardDiv);
+
+    let leaderBoardHeader = document.createElement("h2");
+    leaderBoardHeader.textContent = "High Scores";
+    leaderBoardDiv.appendChild(leaderBoardHeader);
+
+    let leaderBoardDisplay = document.createElement("ul");
+    leaderBoardDiv.appendChild(leaderBoardDisplay);
+
+
+    console.log(JSON.parse(localStorage.getItem("nameAndScore")))
+
+    
+    let nameAndScore = JSON.parse(localStorage.getItem("nameAndScore"));
+    nameAndScore.push(nsObject);
+    localStorage.setItem("nameAndScore", JSON.stringify(nameAndScore));
+
+
+
+    // nsParsed.forEach(function(data, index){
+        
+    // })
+    
+}
+
+
+
+
+// last commit added text box, submit button, listeners, and got typed keys appearing in box
