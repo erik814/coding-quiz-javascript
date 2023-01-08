@@ -6,6 +6,7 @@ let option4 = "";
 let answer = "";
 let displayTimer = "";
 let nameAndScore = [];
+let nameAndScoreContainer = [];
 
 let score = 0;
 let timeLeft = 60;
@@ -128,7 +129,7 @@ function clickListener(){
     document.body.addEventListener("click", function(e){
         if(e.target.textContent === questions[questionIndex].answer){
             correct();
-        } else if (e.target.textContent === questions[questionIndex].option1 || e.target.textContent === questions[questionIndex].option2 || e.target.textContent === questions[questionIndex].option3 || e.target.textContent === questions[questionIndex].option4) {
+        } else if(e.target.textContent === questions[questionIndex].option1 || e.target.textContent === questions[questionIndex].option2 || e.target.textContent === questions[questionIndex].option3 || e.target.textContent === questions[questionIndex].option4) {
             incorrect();
         }
     });
@@ -212,14 +213,6 @@ function gameOver(){
     document.getElementById("timer").innerHTML = "";
     document.getElementById("score").innerHTML = "";
 
-    // let reinstateH1 = document.createElement("h1");
-    // reinstateH1.setAttribute("id", "h1GameOver")
-    // reinstateH1.textContent = ("Game Over!");
-    // document.body.appendChild(reinstateH1);
-
-    // document.getElementById("displayedQuestion").innerHTML = "Game Over!"
-    // document.getElementById("displayedQuestion").innerHTML = "Final Score: " + score;
-
     let gameOverDiv = document.createElement("div");
     gameOverDiv.setAttribute("id", "gameoverdiv");
     document.body.appendChild(gameOverDiv);
@@ -259,7 +252,34 @@ function takeInitials(){
     submitButton.textContent = "Submit";
     inputSubmitContainer.appendChild(submitButton);
 
-    //write initials to text box & save to storage
+    
+    // setup leaderboard
+
+    var leaderBoardDiv = document.createElement("div");
+    document.body.appendChild(leaderBoardDiv);
+
+    var leaderBoardHeader = document.createElement("h2");
+    leaderBoardHeader.textContent = "High Scores";
+    leaderBoardDiv.appendChild(leaderBoardHeader);
+
+    var leaderBoardDisplay = document.createElement("div");
+    leaderBoardDisplay.setAttribute("id", "ul")
+    leaderBoardDiv.appendChild(leaderBoardDisplay);
+
+    //pull from storage and display
+
+    var nameAndScore = JSON.parse(localStorage.getItem("nameAndScore"));
+    var leaderBoardLi = document.createElement("p");
+    leaderBoardLi.textContent = JSON.stringify(nameAndScore);
+    leaderBoardDisplay.appendChild(leaderBoardLi);
+
+    nameAndScoreContainer.push(nameAndScore);
+
+
+
+    leaderBoardDiv.style.display = "none";
+
+
 
     textInputField.addEventListener('keydown', function(e){
         console.log(e);
@@ -267,62 +287,25 @@ function takeInitials(){
 
     inputSubmitContainer.addEventListener('click', function(e){
         e.preventDefault();
+        console.log(e.target)
         if(e.target === submitButton){
 
             console.log(textInputField.value)
             console.log(score)
 
-            let nsObject = {
+            var nsObject = {
                 player: textInputField.value,
                 score: score
             };
+            
+            console.log(nsObject)
 
-            localStorage.setItem("nameAndScore", JSON.stringify(nsObject))
+            nameAndScoreContainer.push(nsObject);
+            localStorage.setItem("nameAndScore", JSON.stringify(nameAndScoreContainer));
 
-            highScores();
+            leaderBoardDiv.style.display = "block";
+            leaderBoardLi.innerHTML = JSON.stringify(nameAndScore);
+
         }
     });
 }
-
-
-
-function highScores(){
-    console.log("starting highsscores")
-    document.getElementById("gameoverdiv").innerHTML = "";
-    inputSubmitContainer.innerHTML = "";
-
-    let leaderBoardDiv = document.createElement("div");
-    document.body.appendChild(leaderBoardDiv);
-
-    let leaderBoardHeader = document.createElement("h2");
-    leaderBoardHeader.textContent = "High Scores";
-    leaderBoardDiv.appendChild(leaderBoardHeader);
-
-    let leaderBoardDisplay = document.createElement("ul");
-    leaderBoardDisplay.setAttribute("id", "ul")
-    leaderBoardDiv.appendChild(leaderBoardDisplay);
-
-    console.log("nsobject at highscores " + nsObject)
-    console.log(JSON.parse(localStorage.getItem("nameAndScore")))
-
-
-    let nameAndScore = JSON.parse(localStorage.getItem("nameAndScore"));
-    console.log(nameAndScore)
-    // JSON.stringify(nameAndScore).push(JSON.stringify(nsObject));
-
-    var li = document.createElement("li");
-    li.textContent = JSON.stringify(nameAndScore);
-    leaderBoardDisplay.appendChild(li);
-
-
-
-    // nsParsed.forEach(function(data, index){
-        
-    // })
-    
-}
-
-
-
-
-// quiz questions, started on local storage
