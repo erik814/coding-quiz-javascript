@@ -66,3 +66,27 @@ body {
 #displayedOptions button:hover{
     font-size: 22px;
 }
+
+#qAndA{
+    padding-top: 30px;
+}
+
+#correctPtag{
+    padding-top: 200px;
+}
+
+/* Gameover Submit Section */
+
+#inputSubmitContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#textInputField{
+    display: block;
+}
+
+#submitButton{
+    display: block;
+}

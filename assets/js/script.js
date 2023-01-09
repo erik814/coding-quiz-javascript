@@ -19,6 +19,7 @@ let gameOverDiv = "";
 let nsObject = {}
 
 var displayCorrect = document.createElement("p");
+displayCorrect.setAttribute("id", "correctPtag")
 displayCorrect.textContent = ("");
 document.body.appendChild(displayCorrect);
 
@@ -87,7 +88,7 @@ let questions = [
 document.getElementById("startButton").addEventListener("click", start);
 
 function start (){
-    // document.getElementById("initial-container").innerHTML = "";
+    
     document.getElementById("initial-container").style.display = 'none';
     
     startTimer();
@@ -212,6 +213,7 @@ function gameOver(){
     currentOptions.innerHTML = "";
     document.getElementById("timer").innerHTML = "";
     document.getElementById("score").innerHTML = "";
+    displayCorrect.style.padding = "0";
 
     let gameOverDiv = document.createElement("div");
     gameOverDiv.setAttribute("id", "gameoverdiv");
@@ -231,7 +233,6 @@ function gameOver(){
 
 
 function takeInitials(){
-        // add initials text input and submit button
 
     let inputSubmitContainer = document.createElement("div");
     inputSubmitContainer.setAttribute("id", "inputSubmitContainer");
@@ -290,6 +291,8 @@ function takeInitials(){
         console.log(e.target)
         if(e.target === submitButton){
 
+            inputSubmitContainer.innerHTML = "";
+
             console.log(textInputField.value)
             console.log(score)
 
@@ -304,7 +307,13 @@ function takeInitials(){
             localStorage.setItem("nameAndScore", JSON.stringify(nameAndScoreContainer));
 
             leaderBoardDiv.style.display = "block";
-            leaderBoardLi.innerHTML = JSON.stringify(nameAndScore);
+            //leaderBoardLi.innerHTML = JSON.stringify(nameAndScore);
+
+            for(var i = 0; i < JSON.stringify(nameAndScore).length; i++){
+                var pTag = document.createElement("p");
+                pTag.textContent = nameAndScore[i];
+                leaderBoardDisplay.appendChild(pTag);
+            }
 
         }
     });
