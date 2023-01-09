@@ -9,7 +9,7 @@ let nameAndScore = [];
 let nameAndScoreContainer = [];
 
 let score = 0;
-let timeLeft = 60;
+let timeLeft = 3;
 let questionIndex = 0;
 let countDown = "";
 
@@ -269,9 +269,8 @@ function takeInitials(){
 
     //pull from storage and display
 
-    var nameAndScore = JSON.parse(localStorage.getItem("nameAndScore"));
+    var nameAndScore = JSON.parse(localStorage.getItem("nameAndScore")) || [];
     var leaderBoardLi = document.createElement("p");
-    leaderBoardLi.textContent = JSON.stringify(nameAndScore);
     leaderBoardDisplay.appendChild(leaderBoardLi);
 
     nameAndScoreContainer.push(nameAndScore);
@@ -293,9 +292,6 @@ function takeInitials(){
 
             inputSubmitContainer.innerHTML = "";
 
-            console.log(textInputField.value)
-            console.log(score)
-
             var nsObject = {
                 player: textInputField.value,
                 score: score
@@ -303,15 +299,14 @@ function takeInitials(){
             
             console.log(nsObject)
 
-            nameAndScoreContainer.push(nsObject);
-            localStorage.setItem("nameAndScore", JSON.stringify(nameAndScoreContainer));
+            nameAndScore.push(nsObject);
+            localStorage.setItem("nameAndScore", JSON.stringify(nameAndScore));
 
             leaderBoardDiv.style.display = "block";
-            //leaderBoardLi.innerHTML = JSON.stringify(nameAndScore);
 
-            for(var i = 0; i < JSON.stringify(nameAndScore).length; i++){
+            for(var i = 0; i < nameAndScore.length; i++){
                 var pTag = document.createElement("p");
-                pTag.textContent = nameAndScore[i];
+                pTag.textContent = nameAndScore[i].player + " - " + nameAndScore[i].score;
                 leaderBoardDisplay.appendChild(pTag);
             }
 
